@@ -19,7 +19,49 @@ class DataTransformation:
         self.data_transformation_config = DataTransformationConfig()
 
     def get_data_transformer_object(self):
+        '''
+        This function is responsible for data transformation 
+        '''
         try:
-            pass
-        except:
-            pass
+            numerical_columns = ["writing_score", "reading_score"]
+            categorical_columns = [
+                "gender",
+                "race_ethnicity",
+                "parental_level_of_education",
+                "lunch",
+                "test_preparation_course"
+                ]
+            
+            logging.info("Numerical and Categorical columns are being transformed")
+            numerical_pipeline = Pipeline(
+                steps=[
+                    ("imputation", SimpleImputer(strategy="median")),
+                    ("scaling", StandardScaler())
+                ]
+            )
+            
+
+            categorical_pipeline = Pipeline(
+                steps=[
+                    ("imputation", SimpleImputer(strategy="most_frequent")),
+                    ("encoding", OneHotEncoder()),
+                    ("scaling", StandardScaler())
+                ]
+            )
+            
+            logging.info(f"Numerical columns:{numerical_columns}")
+            logging.info(f"Categorical columns: {categorical_columns}")
+
+            preprocessor = ColumnTransformer(
+                [
+                    ("numerical_pipeline", numerical_pipeline, numerical_columns),
+                    ("categorical_pipeline", categorical_pipeline, categorical_columns)
+                ]
+            )
+
+            logging.info("Numerical columns transformation completed")
+            logging.info("Categorical columns transformation completed")
+
+            return preprocessor
+        except Exception as e:
+            raise CustomException(e,sys)
