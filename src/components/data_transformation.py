@@ -74,5 +74,9 @@ class DataTransformation:
 
             logging.info("Reading train and test data completed ")
 
+            logging.info("Obtaining preprocessing object")
+
+            preprocessing_obj = self.get_data_transformer_object()
+
         except:
             pass
