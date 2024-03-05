@@ -69,3 +69,10 @@ class DataTransformation:
     def initiate_data_transformation(self, train_path, test_path):
 
         try:
+            train_df = pd.read_csv(train_path)
+            test_df = pd.read_csv(test_path)
+
+            logging.info("Reading train and test data completed ")
+
+        except:
+            pass
