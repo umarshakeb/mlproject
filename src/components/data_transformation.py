@@ -12,7 +12,7 @@ from sklearn.preprocessing import OneHotEncoder,StandardScaler
 
 @dataclass
 class DataTransformationConfig:
-    preprocessor_onject_file_path = os.path.join("artefacts","preprocessor.pkl")
+    preprocessor_object_file_path = os.path.join("artefacts","preprocessor.pkl")
 
 class DataTransformation:
     def __init__(self):
@@ -107,6 +107,11 @@ class DataTransformation:
             ]
 
             logging.info("Saved preprocessing object")
-            
+
+            return (
+                train_arr,
+                test_arr,
+                self.data_transformation_config.preprocessor_object_file_path,
+            )
         except:
             pass
