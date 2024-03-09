@@ -9,6 +9,8 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer, KNNImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder,StandardScaler
+import ssl
+from src.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
@@ -108,10 +110,15 @@ class DataTransformation:
 
             logging.info("Saved preprocessing object")
 
+            save_object(
+                file_path = self.data_transformation_config.preprocessor_object_file_path,
+                obj = preprocessing_obj
+            )
+
             return (
                 train_arr,
                 test_arr,
                 self.data_transformation_config.preprocessor_object_file_path,
             )
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e,sys)
