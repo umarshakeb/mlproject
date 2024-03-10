@@ -38,7 +38,7 @@ class DataTransformation:
             numerical_pipeline = Pipeline(
                 steps=[
                     ("imputation", SimpleImputer(strategy="median")),
-                    ("scaling", StandardScaler())
+                    ("scaling", StandardScaler(with_mean=False))
                 ]
             )
             
@@ -47,7 +47,7 @@ class DataTransformation:
                 steps=[
                     ("imputation", SimpleImputer(strategy="most_frequent")),
                     ("encoding", OneHotEncoder()),
-                    ("scaling", StandardScaler())
+                    ("scaling", StandardScaler(with_mean=False))
                 ]
             )
             
@@ -80,7 +80,7 @@ class DataTransformation:
 
             preprocessing_obj = self.get_data_transformer_object()
 
-            target_column_name = "math_Score"
+            target_column_name = "math_score"
             numerical_columns = ["writing_score", "reading_score"]
             categorical_columns = [
                 "gender",

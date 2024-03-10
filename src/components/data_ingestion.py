@@ -1,12 +1,11 @@
 import os
 import sys
-import src
 import pandas as pd
 from src.exception import CustomException
 from src.logger import logging
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-from src.components.data_ingestion import DataTransformation, DataTransformationConfig
+from src.components.data_transformation import DataTransformation, DataTransformationConfig
 
 @dataclass
 class DataIngestionConfig:
@@ -34,6 +33,11 @@ class DataIngestion:
             test_set.to_csv(self.ingestion_config.test_data_path, index=False, header=True)
 
             logging.info("Data ingestion completed")
+
+            return (
+                self.ingestion_config.train_data_path,
+                self.ingestion_config.test_data_path
+            )
 
         except Exception as e:
             raise CustomException(e, sys)
